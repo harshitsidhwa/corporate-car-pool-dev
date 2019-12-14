@@ -8,6 +8,7 @@ import java.util.Date;
 @Data
 public class OfferRideDTO {
 
+    private String carNumber;
     private Points pickupPoint;
     private Points destinationPoint;
     private Date tripStartTime;

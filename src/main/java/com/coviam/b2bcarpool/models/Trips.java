@@ -15,6 +15,7 @@ public class Trips {
     private String tripId;
     private String tripStatus;
     private String userId;
+    private String carNumber;
     private Points pickupPoint;
     private Points destinationPoint;
     private Date tripStartTime;

@@ -29,6 +29,7 @@ public class OfferRideServiceImplementation implements OfferRideService {
         newTrip.setOfferedSeats(requestContent.getOfferedSeats());
         newTrip.setTripStartTime(requestContent.getTripStartTime());
         newTrip.setTripStatus(TripStatusEnum.ACTIVE_STATUS);
+        newTrip.setCarNumber(requestContent.getCarNumber());
         log.info("CreateTripRequest-->" + newTrip.toString());
         offerRideRepository.save(newTrip);
         return true;
