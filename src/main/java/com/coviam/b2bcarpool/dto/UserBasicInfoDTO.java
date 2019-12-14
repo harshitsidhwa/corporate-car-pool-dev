@@ -1,4 +1,4 @@
-package com.coviam.b2bcarpool.DTO;
+package com.coviam.b2bcarpool.dto;
 
 public class UserBasicInfoDTO {
 }
