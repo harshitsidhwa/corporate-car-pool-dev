@@ -1,19 +1,9 @@
 package com.coviam.b2bcarpool.models.enums;
 
-public enum TripStatusEnum {
-    ACTIVE_STATUS("ACTIVE"),
-    CANCELLED_STATUS("CANCELLED"),
-    COMPLETED_STATUS("COMPLETED"),
-    FILLED_STATUS("FILLED"),
-    STARTED_STATUS("STARTED");
-
-    private String tripStatus;
-
-    TripStatusEnum(String tripStatus) {
-        this.tripStatus = tripStatus;
-    }
-
-    public String getTripStatus() {
-        return tripStatus;
-    }
+public interface TripStatusEnum {
+    public static final String ACTIVE_STATUS = "ACTIVE";
+    public static final String CANCELLED_STATUS = "CANCELLED";
+    public static final String COMPLETED_STATUS = "COMPLETED";
+    public static final String FILLED_STATUS = "FILLED";
+    public static final String STARTED_STATUS = "STARTED";
 }
