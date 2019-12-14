@@ -18,13 +18,14 @@ public class OfferRideController {
 
     /**
      * Create Trip
+     *
      * @param tripDetails
      * @return
      */
     @PostMapping(value = "/create-trip", consumes = "application/json", produces = "application/json")
     public ResponseDTO<Void> createTrip(@RequestBody(required = true) RequestDTO<OfferRideDTO> tripDetails) {
         ResponseDTO<Void> responseDTO = new ResponseDTO<>();
-        if(offerRideService.createTrip(tripDetails.getUserId(), tripDetails.getRequestContent())) {
+        if (offerRideService.createTrip(tripDetails.getUserId(), tripDetails.getRequestContent())) {
             responseDTO.setSuccess(true);
             responseDTO.setErrorMessage(null);
         } else {

@@ -1,16 +1,12 @@
 package com.coviam.b2bcarpool.models;
 
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(
-        name="user-cars",
-        uniqueConstraints = @UniqueConstraint(columnNames={"carNumber"})
-)
+@Document
 public class Cars {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String carId;
     private String userId;
     private String carNumber;
