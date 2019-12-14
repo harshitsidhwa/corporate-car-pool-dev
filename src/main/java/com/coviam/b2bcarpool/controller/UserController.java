@@ -32,8 +32,8 @@ public class UserController {
     public ResponseDTO<UserInfoDTO> getUserInfo(@PathVariable(required = true) String userId) {
         ResponseDTO<UserInfoDTO> responseDTO = new ResponseDTO<>();
         try {
-            responseDTO.setResponse(userService.getUserInfo(userId));
-            if (responseDTO.getResponse() != null) {
+            responseDTO.setResponseContent(userService.getUserInfo(userId));
+            if (responseDTO.getResponseContent() != null) {
                 responseDTO.setSuccess(true);
                 responseDTO.setErrorMessage(null);
             } else {
@@ -60,16 +60,16 @@ public class UserController {
             if (userService.registerNewUser(requestDTO.getRequestContent())) {
                 responseDTO.setErrorMessage(null);
                 responseDTO.setSuccess(true);
-                responseDTO.setResponse(null);
+                responseDTO.setResponseContent(null);
             } else {
                 responseDTO.setErrorMessage(ErrorMessages.SOME_UNEXPECTED_ERROR_OCCUR);
                 responseDTO.setSuccess(false);
-                responseDTO.setResponse(null);
+                responseDTO.setResponseContent(null);
             }
         } catch (Exception exp) {
             responseDTO.setErrorMessage(exp.getMessage());
             responseDTO.setSuccess(false);
-            responseDTO.setResponse(null);
+            responseDTO.setResponseContent(null);
         }
         return responseDTO;
     }

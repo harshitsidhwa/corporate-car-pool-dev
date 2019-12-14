@@ -1,7 +1,7 @@
 package com.coviam.b2bcarpool.controller;
 
-import com.coviam.b2bcarpool.dto.AvailableRideInfoDTO;
 import com.coviam.b2bcarpool.dto.RequestDTO;
+import com.coviam.b2bcarpool.dto.ResponseDTO;
 import com.coviam.b2bcarpool.dto.ResponseListDTO;
 import com.coviam.b2bcarpool.dto.RideDTO;
 import com.coviam.b2bcarpool.helper.ErrorMessages;
@@ -26,10 +26,10 @@ public class FindRideController {
      * @return
      */
     @PostMapping(value = "/find-ride", consumes = "application/json", produces = "application/json")
-    public ResponseListDTO<AvailableRideInfoDTO> findRides(@RequestBody(required = true) RequestDTO<RideDTO> rideReq) {
-        ResponseListDTO<AvailableRideInfoDTO> response = new ResponseListDTO<>();
+    public ResponseListDTO<RideDTO> findRides(@RequestBody(required = true) RequestDTO<RideDTO> rideReq) {
+        ResponseListDTO<RideDTO> response = new ResponseListDTO<>();
         try {
-            List<AvailableRideInfoDTO> availableRideInfoList = findRideService.getBestMatchingRide(rideReq.getRequestContent());
+            List<RideDTO> availableRideInfoList = findRideService.getBestMatchingRide(rideReq.getRequestContent());
             if (availableRideInfoList.size() > 0) {
                 response.setResponseContent(availableRideInfoList);
                 response.setSuccess(true);
@@ -42,7 +42,34 @@ public class FindRideController {
         } catch (Exception exp) {
             response.setResponseContent(null);
             response.setSuccess(false);
-            response.setErrorMessage(ErrorMessages.SOME_UNEXPECTED_ERROR_OCCUR);
+            response.setErrorMessage(exp.getMessage());
+        }
+        return response;
+    }
+
+    /**
+     * Join a Trip
+     *
+     * @param tripJoinReq
+     * @return
+     */
+    @PutMapping(value = "/join-trip", consumes = "application/json", produces = "application/json")
+    public ResponseDTO<RideDTO> joinATrip(@RequestBody(required = true) RequestDTO<RideDTO> tripJoinReq) {
+        ResponseDTO<RideDTO> response = new ResponseDTO<>();
+        try {
+            if (findRideService.insertRideToTrip(tripJoinReq.getUserId(), tripJoinReq.getRequestContent())) {
+                response.setResponseContent(tripJoinReq.getRequestContent());
+                response.setSuccess(true);
+                response.setErrorMessage(null);
+            } else {
+                response.setResponseContent(null);
+                response.setSuccess(true);
+                response.setErrorMessage(ErrorMessages.SOME_UNEXPECTED_ERROR_OCCUR);
+            }
+        } catch (Exception exp) {
+            response.setResponseContent(null);
+            response.setSuccess(false);
+            response.setErrorMessage(exp.getMessage());
         }
         return response;
     }

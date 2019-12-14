@@ -35,7 +35,7 @@ public class OfferRideController {
             responseDTO.setSuccess(false);
             responseDTO.setErrorMessage(ErrorMessages.SOME_UNEXPECTED_ERROR_OCCUR);
         }
-        responseDTO.setResponse(null);
+        responseDTO.setResponseContent(null);
         return responseDTO;
     }
 }

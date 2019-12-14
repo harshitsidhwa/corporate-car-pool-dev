@@ -3,7 +3,7 @@ package com.coviam.b2bcarpool.dto;
 public class ResponseDTO<T> {
     private boolean success;
     private String errorMessage;
-    private T response;
+    private T responseContent;
 
     public boolean getSuccess() {
         return success;
@@ -21,12 +21,12 @@ public class ResponseDTO<T> {
         this.errorMessage = errorMessage;
     }
 
-    public T getResponse() {
-        return response;
+    public T getResponseContent() {
+        return responseContent;
     }
 
-    public void setResponse(T response) {
-        this.response = response;
+    public void setResponseContent(T responseContent) {
+        this.responseContent = responseContent;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ResponseDTO<T> {
         return "ResponseDTO{" +
                 "status='" + success + '\'' +
                 ", errorMessage='" + errorMessage + '\'' +
-                ", response=" + response +
+                ", responseContent=" + responseContent +
                 '}';
     }
 }
