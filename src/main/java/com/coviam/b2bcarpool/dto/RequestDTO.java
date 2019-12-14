@@ -24,7 +24,7 @@ public class RequestDTO<T> {
     public String toString() {
         return "RequestDTO{" +
                 "userId='" + userId + '\'' +
-                ", requestContent=" + requestContent.toString() +
+                ", requestContent=" + requestContent +
                 '}';
     }
 }

@@ -57,11 +57,11 @@
 <!--            <version>6.11.0</version>-->
 <!--        </dependency>-->
         <!-- https://mvnrepository.com/artifact/com.google.maps/google-maps-services -->
-<!--        <dependency>-->
-<!--            <groupId>com.google.maps</groupId>-->
-<!--            <artifactId>google-maps-services</artifactId>-->
-<!--            <version>0.10.1</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.google.maps</groupId>
+            <artifactId>google-maps-services</artifactId>
+            <version>0.10.1</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

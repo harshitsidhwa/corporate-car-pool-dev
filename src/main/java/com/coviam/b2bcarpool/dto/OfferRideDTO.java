@@ -13,4 +13,15 @@ public class OfferRideDTO {
     private Points destinationPoint;
     private Date tripStartTime;
     private int offeredSeats;
+
+    @Override
+    public String toString() {
+        return "OfferRideDTO{" +
+                "carNumber='" + carNumber + '\'' +
+                ", pickupPoint=" + pickupPoint +
+                ", destinationPoint=" + destinationPoint +
+                ", tripStartTime=" + tripStartTime +
+                ", offeredSeats=" + offeredSeats +
+                '}';
+    }
 }

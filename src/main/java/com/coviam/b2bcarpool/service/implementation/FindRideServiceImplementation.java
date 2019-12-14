@@ -18,11 +18,13 @@ public class FindRideServiceImplementation implements FindRideService {
     @Autowired
     private RideRepository rideRepository;
 
-    public List<RideDTO> getBestMatchingRide(RideDTO requestContent) {
-        List<RideDTO> result = new ArrayList<>();
-        return result;
-    }
-
+    /**
+     * Allot user chosen ride to trip
+     *
+     * @param riderUserId
+     * @param requestContent
+     * @return
+     */
     public boolean insertRideToTrip(String riderUserId, RideDTO requestContent) {
         TripRiders tripRider = new TripRiders();
         BeanUtils.copyProperties(requestContent, tripRider);
@@ -32,5 +34,18 @@ public class FindRideServiceImplementation implements FindRideService {
         tripRider.setCreatedBy(riderUserId);
         rideRepository.save(tripRider);
         return true;
+    }
+
+    /**
+     * Find the best suited trip options for the rider
+     * first sort by smallest distance and the by time
+     *
+     * @param requestContent
+     * @return
+     */
+    public List<RideDTO> getBestMatchingRide(RideDTO requestContent) {
+        List<RideDTO> result = new ArrayList<>();
+        // rideRepository.find
+        return result;
     }
 }
