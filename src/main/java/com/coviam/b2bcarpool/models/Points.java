@@ -9,6 +9,7 @@ public class Points {
     private double latitude;
     private double longitude;
     private String placeId;
+    private String placeAddress;
 
     public double getLatitude() {
         return latitude;

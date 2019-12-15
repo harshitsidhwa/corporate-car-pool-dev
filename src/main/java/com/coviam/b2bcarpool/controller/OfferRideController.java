@@ -5,9 +5,12 @@ import com.coviam.b2bcarpool.dto.OfferRideDTO;
 import com.coviam.b2bcarpool.dto.RequestDTO;
 import com.coviam.b2bcarpool.dto.ResponseDTO;
 import com.coviam.b2bcarpool.service.OfferRideService;
+import com.google.maps.errors.ApiException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @Slf4j
 @CrossOrigin
@@ -25,7 +28,7 @@ public class OfferRideController {
      * @return
      */
     @PostMapping(value = "/create-trip", consumes = "application/json", produces = "application/json")
-    public ResponseDTO<CreateTripResponseDTO> createTrip(@RequestBody(required = true) RequestDTO<OfferRideDTO> tripDetails) {
+    public ResponseDTO<CreateTripResponseDTO> createTrip(@RequestBody(required = true) RequestDTO<OfferRideDTO> tripDetails) throws InterruptedException, ApiException, IOException {
         log.info("CreateTripRequest Params-->" + tripDetails.toString());
         ResponseDTO<CreateTripResponseDTO> responseDTO = new ResponseDTO<>();
         CreateTripResponseDTO createTripDTO = offerRideService.createTrip(tripDetails.getUserId(), tripDetails.getRequestContent());

@@ -1,5 +1,6 @@
 package com.coviam.b2bcarpool.service.implementation;
 
+import com.coviam.b2bcarpool.config.GoogleMapsConfig;
 import com.coviam.b2bcarpool.dto.JoinRideResponseDTO;
 import com.coviam.b2bcarpool.dto.RideDTO;
 import com.coviam.b2bcarpool.dto.TripBasicInfoDTO;
@@ -12,12 +13,17 @@ import com.coviam.b2bcarpool.models.enums.TripStatusEnum;
 import com.coviam.b2bcarpool.repository.RideRepository;
 import com.coviam.b2bcarpool.repository.TripsRepository;
 import com.coviam.b2bcarpool.service.FindRideService;
+import com.google.maps.GeocodingApi;
+import com.google.maps.errors.ApiException;
+import com.google.maps.model.GeocodingResult;
+import com.google.maps.model.LatLng;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -33,6 +39,8 @@ public class FindRideServiceImplementation implements FindRideService {
     private RideRepository rideRepository;
     @Autowired
     private TripsRepository tripsRepository;
+    @Autowired
+    private GoogleMapsConfig googleMapsConfig;
 
     /**
      * Allot user chosen ride to trip
@@ -41,7 +49,7 @@ public class FindRideServiceImplementation implements FindRideService {
      * @param requestContent
      * @return
      */
-    public JoinRideResponseDTO insertRideToTrip(String riderUserId, RideDTO requestContent) {
+    public JoinRideResponseDTO insertRideToTrip(String riderUserId, RideDTO requestContent) throws InterruptedException, ApiException, IOException {
         JoinRideResponseDTO responseDTO = new JoinRideResponseDTO();
         if (rideRepository.findByUserIdAndAllottedTripId(riderUserId, requestContent.getTripId()) != null) {
             responseDTO.setRideJoined(false);
@@ -58,6 +66,17 @@ public class FindRideServiceImplementation implements FindRideService {
             responseDTO.setRideJoined(false);
             responseDTO.setErrMsg(ErrorMessages.NO_SEATS_AVAILABLE_IN_TRIP);
             return responseDTO;
+        }
+        LatLng pickupAddressLatLng = new LatLng(requestContent.getPickupPoint().getLatitude(), requestContent.getPickupPoint().getLongitude());
+        LatLng destinationAddressLatLng = new LatLng(requestContent.getDestinationPoint().getLatitude(), requestContent.getDestinationPoint().getLongitude());
+        GeocodingResult[] results = GeocodingApi.reverseGeocode(googleMapsConfig.getContext(), pickupAddressLatLng).await();
+        // Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        if (results.length > 0) {
+            requestContent.getPickupPoint().setPlaceAddress(results[0].formattedAddress);
+        }
+        results = GeocodingApi.reverseGeocode(googleMapsConfig.getContext(), destinationAddressLatLng).await();
+        if (results.length > 0) {
+            requestContent.getDestinationPoint().setPlaceAddress(results[0].formattedAddress);
         }
         Riders rider = new Riders();
         BeanUtils.copyProperties(requestContent, rider);
