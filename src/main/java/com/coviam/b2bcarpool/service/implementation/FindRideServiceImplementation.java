@@ -67,16 +67,22 @@ public class FindRideServiceImplementation implements FindRideService {
             responseDTO.setErrMsg(ErrorMessages.NO_SEATS_AVAILABLE_IN_TRIP);
             return responseDTO;
         }
-        LatLng pickupAddressLatLng = new LatLng(requestContent.getPickupPoint().getLatitude(), requestContent.getPickupPoint().getLongitude());
-        LatLng destinationAddressLatLng = new LatLng(requestContent.getDestinationPoint().getLatitude(), requestContent.getDestinationPoint().getLongitude());
-        GeocodingResult[] results = GeocodingApi.reverseGeocode(googleMapsConfig.getContext(), pickupAddressLatLng).await();
-        // Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        if (results.length > 0) {
-            requestContent.getPickupPoint().setPlaceAddress(results[0].formattedAddress);
+        GeocodingResult[] results;
+        if (requestContent.getPickupPoint().getPlaceAddress().isEmpty() || requestContent.getPickupPoint().getPlaceAddress() == null) {
+            LatLng pickupAddressLatLng = new LatLng(requestContent.getPickupPoint().getLatitude(), requestContent.getPickupPoint().getLongitude());
+            results = GeocodingApi.reverseGeocode(googleMapsConfig.getContext(), pickupAddressLatLng).await();
+            // Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            if (results.length > 0) {
+                requestContent.getPickupPoint().setPlaceAddress(results[0].formattedAddress);
+            }
         }
-        results = GeocodingApi.reverseGeocode(googleMapsConfig.getContext(), destinationAddressLatLng).await();
-        if (results.length > 0) {
-            requestContent.getDestinationPoint().setPlaceAddress(results[0].formattedAddress);
+
+        if (requestContent.getDestinationPoint().getPlaceAddress().isEmpty() || requestContent.getDestinationPoint().getPlaceAddress() == null) {
+            LatLng destinationAddressLatLng = new LatLng(requestContent.getDestinationPoint().getLatitude(), requestContent.getDestinationPoint().getLongitude());
+            results = GeocodingApi.reverseGeocode(googleMapsConfig.getContext(), destinationAddressLatLng).await();
+            if (results.length > 0) {
+                requestContent.getDestinationPoint().setPlaceAddress(results[0].formattedAddress);
+            }
         }
         Riders rider = new Riders();
         BeanUtils.copyProperties(requestContent, rider);
@@ -88,7 +94,7 @@ public class FindRideServiceImplementation implements FindRideService {
         rider = rideRepository.findByUserIdAndAllottedTripId(riderUserId, requestContent.getTripId());
 
         // Increase CurrSeats count
-        // if all seats are fulled then
+        // if all seats are fulled then change status
         trip.getJoinedRidersId().add(new ObjectId(rider.getRideId()));
         trip.setCurrSeats(trip.getCurrSeats() + 1);
         if (trip.getCurrSeats() == trip.getOfferedSeats()) {

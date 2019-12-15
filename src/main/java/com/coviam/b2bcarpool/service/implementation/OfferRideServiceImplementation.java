@@ -10,8 +10,6 @@ import com.coviam.b2bcarpool.models.enums.TripStatusEnum;
 import com.coviam.b2bcarpool.repository.RideRepository;
 import com.coviam.b2bcarpool.repository.TripsRepository;
 import com.coviam.b2bcarpool.service.OfferRideService;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
@@ -46,25 +44,27 @@ public class OfferRideServiceImplementation implements OfferRideService {
             responseDTO.setErrMsg("A Trip Already Exists for selected Time");
             return responseDTO;
         }
-        LatLng pickupAddressLatLng = new LatLng(requestContent.getPickupPoint().getLatitude(), requestContent.getPickupPoint().getLongitude());
-        LatLng destinationAddressLatLng = new LatLng(requestContent.getDestinationPoint().getLatitude(), requestContent.getDestinationPoint().getLongitude());
-        GeocodingResult[] results = GeocodingApi.reverseGeocode(googleMapsConfig.getContext(), pickupAddressLatLng).await();
-        // Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        if (results.length > 0) {
-            requestContent.getPickupPoint().setPlaceAddress(results[0].formattedAddress);
+        GeocodingResult[] results;
+        if (requestContent.getPickupPoint().getPlaceAddress().isEmpty() || requestContent.getPickupPoint().getPlaceAddress() == null) {
+            LatLng pickupAddressLatLng = new LatLng(requestContent.getPickupPoint().getLatitude(), requestContent.getPickupPoint().getLongitude());
+            results = GeocodingApi.reverseGeocode(googleMapsConfig.getContext(), pickupAddressLatLng).await();
+            // Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            if (results.length > 0) {
+                requestContent.getPickupPoint().setPlaceAddress(results[0].formattedAddress);
+            }
         }
-        results = GeocodingApi.reverseGeocode(googleMapsConfig.getContext(), destinationAddressLatLng).await();
-        if (results.length > 0) {
-            requestContent.getDestinationPoint().setPlaceAddress(results[0].formattedAddress);
+
+        if (requestContent.getDestinationPoint().getPlaceAddress().isEmpty() || requestContent.getDestinationPoint().getPlaceAddress() == null) {
+            LatLng destinationAddressLatLng = new LatLng(requestContent.getDestinationPoint().getLatitude(), requestContent.getDestinationPoint().getLongitude());
+            results = GeocodingApi.reverseGeocode(googleMapsConfig.getContext(), destinationAddressLatLng).await();
+            if (results.length > 0) {
+                requestContent.getDestinationPoint().setPlaceAddress(results[0].formattedAddress);
+            }
         }
         Trips newTrip = new Trips();
+        BeanUtils.copyProperties(requestContent, newTrip);
         newTrip.setUserId(userId);
-        newTrip.setPickupPoint(requestContent.getPickupPoint());
-        newTrip.setDestinationPoint(requestContent.getDestinationPoint());
-        newTrip.setOfferedSeats(requestContent.getOfferedSeats());
-        newTrip.setTripStartTime(requestContent.getTripStartTime());
         newTrip.setTripStatus(TripStatusEnum.ACTIVE_STATUS);
-        newTrip.setVehicleNumber(requestContent.getVehicleNumber());
         newTrip.setCreatedDate(new Date());
         newTrip.setCreatedBy(userId);
         log.info("CreateTripRequest-->" + newTrip.toString());

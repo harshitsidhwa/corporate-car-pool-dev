@@ -1,7 +1,6 @@
 package com.coviam.b2bcarpool.service.implementation;
 
 import com.coviam.b2bcarpool.dto.RideBasicInfoDTO;
-import com.coviam.b2bcarpool.dto.VehicleTypeDTO;
 import com.coviam.b2bcarpool.models.Riders;
 import com.coviam.b2bcarpool.models.enums.RideStatusEnum;
 import com.coviam.b2bcarpool.repository.RideRepository;
