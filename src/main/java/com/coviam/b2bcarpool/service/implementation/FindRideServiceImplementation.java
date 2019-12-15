@@ -144,7 +144,8 @@ public class FindRideServiceImplementation implements FindRideService {
                     ((trips.getOfferedSeats() - trips.getCurrSeats()) >= requestContent.getRequestedSeats())) {
 
                 if (userId.equalsIgnoreCase(trips.getUserId())) continue; // don't show that trip which user has created
-                // if (!directionsHelper.isPickupNearBy(requestContent.getPickupPoint(), trips.getPickupPoint())) continue; // filter based on pickup-point
+                if (!directionsHelper.isPickupNearBy(requestContent.getPickupPoint(), trips.getPickupPoint()))
+                    continue; // filter based on pickup-point
                 TripBasicInfoDTO singleTrip = new TripBasicInfoDTO();
                 BeanUtils.copyProperties(trips, singleTrip);
                 singleTrip.setNumberOfJoinedRiders(trips.getCurrSeats());
