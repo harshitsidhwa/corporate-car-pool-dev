@@ -23,4 +23,5 @@ public class Riders {
     private int requestedSeats;
     private Date createdDate = new Date();
     private String createdBy;
+    private boolean isRiderTripOwner;
 }

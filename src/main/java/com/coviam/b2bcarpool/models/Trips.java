@@ -23,7 +23,7 @@ public class Trips {
     private int offeredSeats;
     private int currSeats = 0;
     private double pricePerKm;
-    private List<Riders> joinedRiders;
+    private List<String> joinedRidersId;
     private Date createdDate = new Date();
     private String createdBy;
 }
