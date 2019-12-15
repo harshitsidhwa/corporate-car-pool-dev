@@ -1,8 +1,8 @@
 package com.coviam.b2bcarpool.service;
 
-import java.util.List;
-
 import com.coviam.b2bcarpool.dto.RideBasicInfoDTO;
+
+import java.util.List;
 
 public interface MyRidesService {
 

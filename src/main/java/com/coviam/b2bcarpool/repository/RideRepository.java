@@ -21,4 +21,6 @@ public interface RideRepository extends MongoRepository<Riders, String> {
     Riders findByUserIdAndAllottedTripId(String userId, String tripId);
 
     List<Riders> findByUserIdAndRideStatus(String riderUserId, String allottedStatus);
+
+    List<Riders> findAllByUserIdAndRideStatusIn(String riderUserId, List<String> rideStatus);
 }
