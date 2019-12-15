@@ -32,6 +32,7 @@ public class MyRideServiceImplementation implements MyRidesService {
         List<RideBasicInfoDTO> result = new ArrayList<>();
 
         List<Riders> rides = rideRepository.findByUserIdAndRideStatus(riderUserId, RideStatusEnum.ALLOTTED_STATUS);
+        log.info("UpcomingRide For " + riderUserId + " \n--> " + rides);
 
         for (Riders ride : rides) {
             RideBasicInfoDTO singleRide = new RideBasicInfoDTO();
@@ -59,7 +60,7 @@ public class MyRideServiceImplementation implements MyRidesService {
             }
         };
         List<Riders> rides = rideRepository.findAllByUserIdAndRideStatusIn(riderUserId, rideStatus);
-
+        log.info("HistoryRide For " + riderUserId + " \n--> " + rides);
         for (Riders ride : rides) {
             RideBasicInfoDTO singleRide = new RideBasicInfoDTO();
             BeanUtils.copyProperties(ride, singleRide);
