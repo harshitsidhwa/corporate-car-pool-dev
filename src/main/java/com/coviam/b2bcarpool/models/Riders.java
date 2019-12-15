@@ -20,7 +20,8 @@ public class Riders {
     private Date rideStartTime;
     private Date rideEndTime;
     private double rideDistance;
-    private int requestedSeats;
+    private int requestedSeats = 1;
     private Date createdDate = new Date();
     private String createdBy;
+    private boolean isRiderTripOwner;
 }
