@@ -5,6 +5,7 @@ import com.coviam.b2bcarpool.dto.JoinRideResponseDTO;
 import com.coviam.b2bcarpool.dto.RideDTO;
 import com.coviam.b2bcarpool.dto.TripBasicInfoDTO;
 import com.coviam.b2bcarpool.helper.DateHelper;
+import com.coviam.b2bcarpool.helper.DirectionsHelper;
 import com.coviam.b2bcarpool.helper.ErrorMessages;
 import com.coviam.b2bcarpool.models.Riders;
 import com.coviam.b2bcarpool.models.Trips;
@@ -45,6 +46,8 @@ public class FindRideServiceImplementation implements FindRideService {
     private UserRepository userRepository;
     @Autowired
     private GoogleMapsConfig googleMapsConfig;
+    @Autowired
+    private DirectionsHelper directionsHelper;
 
     /**
      * Allot user chosen ride to trip
@@ -134,7 +137,9 @@ public class FindRideServiceImplementation implements FindRideService {
         for (Trips trips : tripsFromDb) {
             if (trips.getTripStatus().equalsIgnoreCase(TripStatusEnum.ACTIVE_STATUS) &&
                     ((trips.getOfferedSeats() - trips.getCurrSeats()) >= requestContent.getRequestedSeats())) {
-                if (userId.equalsIgnoreCase(trips.getUserId())) continue;
+
+                if (userId.equalsIgnoreCase(trips.getUserId())) continue; // don't show that trip which user has created
+                // if (!directionsHelper.isPickupNearBy(requestContent.getPickupPoint(), trips.getPickupPoint())) continue; // filter based on pickup-point
                 TripBasicInfoDTO singleTrip = new TripBasicInfoDTO();
                 BeanUtils.copyProperties(trips, singleTrip);
                 singleTrip.setNumberOfJoinedRiders(trips.getCurrSeats());
@@ -147,6 +152,5 @@ public class FindRideServiceImplementation implements FindRideService {
         return result.stream()
                 .sorted(Comparator.comparing(TripBasicInfoDTO::getTripStartTime))
                 .collect(Collectors.toList());
-        // return result;
     }
 }

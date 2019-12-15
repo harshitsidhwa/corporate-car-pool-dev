@@ -54,7 +54,7 @@ public class FindRideController {
      * @param tripJoinReq
      * @return
      */
-    @PutMapping(value = "/join-trip", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/join-trip", consumes = "application/json", produces = "application/json")
     public ResponseDTO<JoinRideResponseDTO> joinATrip(@RequestBody(required = true) RequestDTO<RideDTO> tripJoinReq) {
         log.info("JoinRideReq--> " + tripJoinReq);
         ResponseDTO<JoinRideResponseDTO> response = new ResponseDTO<>();
