@@ -27,7 +27,7 @@ public class FindRideController {
         ResponseListDTO<TripBasicInfoDTO> response = new ResponseListDTO<>();
         try {
             List<TripBasicInfoDTO> availableRideInfoList = findRideService.getBestMatchingRide(rideReq.getRequestContent());
-            if (availableRideInfoList.size() > 0) {
+            if (!availableRideInfoList.isEmpty()) {
                 response.setResponseContent(availableRideInfoList);
                 response.setSuccess(true);
                 response.setErrorMessage(null);
@@ -51,17 +51,18 @@ public class FindRideController {
      * @return
      */
     @PutMapping(value = "/join-trip", consumes = "application/json", produces = "application/json")
-    public ResponseDTO<RideDTO> joinATrip(@RequestBody(required = true) RequestDTO<RideDTO> tripJoinReq) {
-        ResponseDTO<RideDTO> response = new ResponseDTO<>();
+    public ResponseDTO<JoinRideResponseDTO> joinATrip(@RequestBody(required = true) RequestDTO<RideDTO> tripJoinReq) {
+        ResponseDTO<JoinRideResponseDTO> response = new ResponseDTO<>();
         try {
-            if (findRideService.insertRideToTrip(tripJoinReq.getUserId(), tripJoinReq.getRequestContent())) {
-                response.setResponseContent(tripJoinReq.getRequestContent());
+            JoinRideResponseDTO joinResponse = findRideService.insertRideToTrip(tripJoinReq.getUserId(), tripJoinReq.getRequestContent());
+            if (joinResponse.isRideJoined()) {
+                response.setResponseContent(joinResponse);
                 response.setSuccess(true);
                 response.setErrorMessage(null);
             } else {
                 response.setResponseContent(null);
-                response.setSuccess(true);
-                response.setErrorMessage(ErrorMessages.SOME_UNEXPECTED_ERROR_OCCUR);
+                response.setSuccess(false);
+                response.setErrorMessage(joinResponse.getErrMsg());
             }
         } catch (Exception exp) {
             response.setResponseContent(null);

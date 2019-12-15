@@ -1,6 +1,7 @@
 package com.coviam.b2bcarpool.models;
 
 import lombok.Data;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -23,7 +24,7 @@ public class Trips {
     private int offeredSeats;
     private int currSeats = 0;
     private double pricePerKm;
-    private List<String> joinedRidersId;
+    private List<ObjectId> joinedRidersId;
     private Date createdDate = new Date();
     private String createdBy;
 }

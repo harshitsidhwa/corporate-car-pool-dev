@@ -10,6 +10,7 @@ import com.coviam.b2bcarpool.repository.RideRepository;
 import com.coviam.b2bcarpool.repository.TripsRepository;
 import com.coviam.b2bcarpool.service.OfferRideService;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,8 +59,8 @@ public class OfferRideServiceImplementation implements OfferRideService {
         rideRepository.save(rider);
         Riders currRide = rideRepository.findByUserIdAndAllottedTripId(userId, trip.getTripId());
 
-        List<String> tripRiders = new ArrayList<>();
-        tripRiders.add(currRide.getRideId());
+        List<ObjectId> tripRiders = new ArrayList<>();
+        tripRiders.add(new ObjectId(currRide.getRideId()));
         trip.setJoinedRidersId(tripRiders);
         tripsRepository.save(trip);
 

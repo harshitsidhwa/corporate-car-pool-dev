@@ -17,4 +17,6 @@ public interface TripsRepository extends MongoRepository<Trips, String> {
     List<Trips> findByTripStartTimeBetween(Date dateTimeBeforeNow, Date dateTimeAfterNow);
 
     Trips findByUserIdAndTripStartTime(String userId, Date tripStartTime);
+
+    Trips findByTripId(String tripId);
 }
