@@ -23,7 +23,7 @@ public class User {
     private String empId;
     private String organisationName;
     private String profilePicUrl;
-    private List<Cars> userCars;
+    private List<Vehicles> userCars;
     private Date createdDate = new Date();
     private String createdBy = emailId;
 }

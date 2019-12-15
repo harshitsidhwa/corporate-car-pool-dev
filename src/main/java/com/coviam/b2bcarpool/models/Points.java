@@ -8,31 +8,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Points {
     private double latitude;
     private double longitude;
-    private String placeId;
-    private String placeAddress;
+    private String placeId = "";
+    private String placeAddress = null;
 
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getPlaceId() {
-        return placeId;
-    }
-
-    public void setPlaceId(String placeId) {
-        this.placeId = placeId;
+    public String getPlaceAddress() {
+        return placeAddress;
     }
 
     @Override
@@ -41,6 +21,7 @@ public class Points {
                 "latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", placeId='" + placeId + '\'' +
+                ", placeAddress='" + placeAddress + '\'' +
                 '}';
     }
 }

@@ -12,4 +12,5 @@ public interface ErrorMessages {
     String RIDER_ALREADY_JOINED = "Rider Already Joined the ride! Cannot join again!";
     String NO_SEATS_AVAILABLE_IN_TRIP = "there are no seats available in this trip!";
     String TRIP_ALREADY_ENDED = "Sorry! Trip Already Completed, cannot join!¬";
+    String SAME_VEHICLE_REGISTRATION_ATTEMPT = "Sorry! Maybe Your trying to register a Vehicle, which is already registered!";
 }

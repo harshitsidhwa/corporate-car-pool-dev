@@ -1,6 +1,6 @@
 package com.coviam.b2bcarpool.dto;
 
-import com.coviam.b2bcarpool.models.Cars;
+import com.coviam.b2bcarpool.models.Vehicles;
 import lombok.Data;
 
 import java.util.Date;
@@ -18,5 +18,5 @@ public class UserInfoDTO {
     private String empId;
     private String organisationName;
     private String profilePicUrl;
-    private List<Cars> userCars;
+    private List<Vehicles> userCars;
 }
