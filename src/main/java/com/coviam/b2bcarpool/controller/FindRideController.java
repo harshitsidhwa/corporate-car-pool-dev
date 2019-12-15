@@ -1,9 +1,6 @@
 package com.coviam.b2bcarpool.controller;
 
-import com.coviam.b2bcarpool.dto.RequestDTO;
-import com.coviam.b2bcarpool.dto.ResponseDTO;
-import com.coviam.b2bcarpool.dto.ResponseListDTO;
-import com.coviam.b2bcarpool.dto.RideDTO;
+import com.coviam.b2bcarpool.dto.*;
 import com.coviam.b2bcarpool.helper.ErrorMessages;
 import com.coviam.b2bcarpool.service.FindRideService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +23,10 @@ public class FindRideController {
      * @return
      */
     @PostMapping(value = "/find-ride", consumes = "application/json", produces = "application/json")
-    public ResponseListDTO<RideDTO> findRides(@RequestBody(required = true) RequestDTO<RideDTO> rideReq) {
-        ResponseListDTO<RideDTO> response = new ResponseListDTO<>();
+    public ResponseListDTO<TripBasicInfoDTO> findRides(@RequestBody(required = true) RequestDTO<RideDTO> rideReq) {
+        ResponseListDTO<TripBasicInfoDTO> response = new ResponseListDTO<>();
         try {
-            List<RideDTO> availableRideInfoList = findRideService.getBestMatchingRide(rideReq.getRequestContent());
+            List<TripBasicInfoDTO> availableRideInfoList = findRideService.getBestMatchingRide(rideReq.getRequestContent());
             if (availableRideInfoList.size() > 0) {
                 response.setResponseContent(availableRideInfoList);
                 response.setSuccess(true);
