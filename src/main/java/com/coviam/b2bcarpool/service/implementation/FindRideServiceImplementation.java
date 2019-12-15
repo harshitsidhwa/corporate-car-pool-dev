@@ -75,6 +75,11 @@ public class FindRideServiceImplementation implements FindRideService {
             responseDTO.setErrMsg(ErrorMessages.NO_SEATS_AVAILABLE_IN_TRIP);
             return responseDTO;
         }
+        if ((trip.getOfferedSeats() - trip.getCurrSeats()) < requestContent.getRequestedSeats()) {
+            responseDTO.setRideJoined(false);
+            responseDTO.setErrMsg(ErrorMessages.NO_SEATS_AVAILABLE_IN_TRIP);
+            return responseDTO;
+        }
         GeocodingResult[] results;
         if (requestContent.getPickupPoint().getPlaceAddress().isEmpty() || requestContent.getPickupPoint().getPlaceAddress() == null) {
             LatLng pickupAddressLatLng = new LatLng(requestContent.getPickupPoint().getLatitude(), requestContent.getPickupPoint().getLongitude());
@@ -104,7 +109,7 @@ public class FindRideServiceImplementation implements FindRideService {
         // Increase CurrSeats count
         // if all seats are fulled then change status
         trip.getJoinedRidersId().add(new ObjectId(rider.getRideId()));
-        trip.setCurrSeats(trip.getCurrSeats() + 1);
+        trip.setCurrSeats(trip.getCurrSeats() + rider.getRequestedSeats());
         if (trip.getCurrSeats() == trip.getOfferedSeats()) {
             trip.setTripStatus(TripStatusEnum.FILLED_STATUS);
         }
