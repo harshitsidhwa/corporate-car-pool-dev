@@ -6,14 +6,15 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class RideBasicInfoDTO {
-    //for My trips listing page
+public class TripBasicInfoDTO {
     private String userId;
     private String tripId;
+    private String profilePic;
+    private String name;
+    private String vehicleNumber;
     private Points pickupPoint;
     private Points destinationPoint;
-    private Date rideStartTime;
-    private int seats;
-    private String tripStatus;
-    private String vehicleNumber;
+    private Date tripStartTime;
+    private int offeredSeats;
+    private int numberOfJoinedRiders = 0;
 }

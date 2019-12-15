@@ -1,8 +1,6 @@
 package com.coviam.b2bcarpool.controller;
 
-import com.coviam.b2bcarpool.dto.RequestDTO;
-import com.coviam.b2bcarpool.dto.ResponseDTO;
-import com.coviam.b2bcarpool.dto.UserInfoDTO;
+import com.coviam.b2bcarpool.dto.*;
 import com.coviam.b2bcarpool.helper.ErrorMessages;
 import com.coviam.b2bcarpool.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +70,40 @@ public class UserController {
             responseDTO.setResponseContent(null);
         }
         return responseDTO;
+    }
+
+    /**
+     * Check User Login
+     *
+     * @param loginInfo
+     * @return
+     */
+    @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
+    public ResponseDTO<LoginResponseDTO> loginUser(@RequestBody(required = true) RequestDTO<LoginRequestDTO> loginInfo) {
+        ResponseDTO<LoginResponseDTO> loginResponse = new ResponseDTO<>();
+        try {
+            LoginResponseDTO responseContent = userService.checkUserLogin(loginInfo.getRequestContent());
+            if (responseContent.isLoginSuccess()) {
+                loginResponse.setErrorMessage(null);
+                loginResponse.setSuccess(true);
+                loginResponse.setResponseContent(responseContent);
+            } else {
+                if (responseContent.getErrMsg().contains("Password")) {
+                    loginResponse.setErrorMessage(ErrorMessages.WRONG_PASSWORD);
+                    loginResponse.setSuccess(false);
+                    loginResponse.setResponseContent(null);
+                } else if (responseContent.getErrMsg().contains("EXISTS")) {
+                    loginResponse.setErrorMessage(ErrorMessages.USER_NOT_EXISTS);
+                    loginResponse.setSuccess(false);
+                    loginResponse.setResponseContent(null);
+                }
+            }
+        } catch (Exception exp) {
+            loginResponse.setErrorMessage(exp.getMessage());
+            loginResponse.setSuccess(false);
+            loginResponse.setResponseContent(null);
+        }
+        return loginResponse;
     }
 
     private boolean verifyUser(String userId) {

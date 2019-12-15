@@ -15,7 +15,7 @@ public class Trips {
     private String tripId;
     private String tripStatus;
     private String userId;
-    private String carNumber;
+    private String vehicleNumber;
     private Points pickupPoint;
     private Points destinationPoint;
     private Date tripStartTime;
@@ -23,7 +23,7 @@ public class Trips {
     private int offeredSeats;
     private int currSeats = 0;
     private double pricePerKm;
-    private List<TripRiders> joinedRiders;
+    private List<Riders> joinedRiders;
     private Date createdDate = new Date();
     private String createdBy;
 }

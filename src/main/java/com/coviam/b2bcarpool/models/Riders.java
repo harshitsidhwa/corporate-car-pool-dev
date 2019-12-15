@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 @Document
-public class TripRiders {
+public class Riders {
 
     @Id
     private String rideId;

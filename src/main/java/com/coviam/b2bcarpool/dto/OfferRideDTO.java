@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 public class OfferRideDTO {
 
-    private String carNumber;
+    private String vehicleNumber;
     private Points pickupPoint;
     private Points destinationPoint;
     private Date tripStartTime;
@@ -17,7 +17,7 @@ public class OfferRideDTO {
     @Override
     public String toString() {
         return "OfferRideDTO{" +
-                "carNumber='" + carNumber + '\'' +
+                "carNumber='" + vehicleNumber + '\'' +
                 ", pickupPoint=" + pickupPoint +
                 ", destinationPoint=" + destinationPoint +
                 ", tripStartTime=" + tripStartTime +
