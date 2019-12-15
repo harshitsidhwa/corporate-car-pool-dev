@@ -52,13 +52,14 @@ public class UserController {
      * @return
      */
     @PostMapping(value = "/signup", consumes = "application/json", produces = "application/json")
-    public ResponseDTO<Void> addNewUser(@RequestBody(required = true) RequestDTO<UserInfoDTO> requestDTO) {
-        ResponseDTO<Void> responseDTO = new ResponseDTO<>();
+    public ResponseDTO<SignUpResponseDTO> addNewUser(@RequestBody(required = true) RequestDTO<UserInfoDTO> requestDTO) {
+        ResponseDTO<SignUpResponseDTO> responseDTO = new ResponseDTO<>();
         try {
-            if (userService.registerNewUser(requestDTO.getRequestContent())) {
+            SignUpResponseDTO signUpResponse = userService.registerNewUser(requestDTO.getRequestContent());
+            if (signUpResponse.isSignUpSuccess()) {
                 responseDTO.setErrorMessage(null);
                 responseDTO.setSuccess(true);
-                responseDTO.setResponseContent(null);
+                responseDTO.setResponseContent(signUpResponse);
             } else {
                 responseDTO.setErrorMessage(ErrorMessages.SOME_UNEXPECTED_ERROR_OCCUR);
                 responseDTO.setSuccess(false);

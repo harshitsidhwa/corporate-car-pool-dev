@@ -65,7 +65,7 @@ public class FindRideServiceImplementation implements FindRideService {
         List<Trips> tripsFromDb = tripsRepository.findByTripStartTimeBetween(dateTimeBeforeStartTime, dateTimeAfterStartTime);
         log.info("FindTripsFromDB-->" + tripsFromDb.toString());
         for (Trips trips : tripsFromDb) {
-            if (trips.getTripStatus().equalsIgnoreCase(TripStatusEnum.ACTIVE_STATUS)) {
+            if (trips.getTripStatus().equalsIgnoreCase(TripStatusEnum.ACTIVE_STATUS) && trips.getCurrSeats() > requestContent.getRequestedSeats()) {
                 TripBasicInfoDTO singleTrip = new TripBasicInfoDTO();
                 BeanUtils.copyProperties(trips, singleTrip);
                 singleTrip.setNumberOfJoinedRiders(trips.getCurrSeats());

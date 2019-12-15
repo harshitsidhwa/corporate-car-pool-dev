@@ -2,6 +2,7 @@ package com.coviam.b2bcarpool.service.implementation;
 
 import com.coviam.b2bcarpool.dto.LoginRequestDTO;
 import com.coviam.b2bcarpool.dto.LoginResponseDTO;
+import com.coviam.b2bcarpool.dto.SignUpResponseDTO;
 import com.coviam.b2bcarpool.dto.UserInfoDTO;
 import com.coviam.b2bcarpool.models.User;
 import com.coviam.b2bcarpool.repository.UserRepository;
@@ -21,14 +22,17 @@ public class UserServiceImplementation implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public boolean registerNewUser(UserInfoDTO userInfo) {
+    public SignUpResponseDTO registerNewUser(UserInfoDTO userInfo) {
+        SignUpResponseDTO responseDTO = new SignUpResponseDTO();
         User newUser = new User();
         BeanUtils.copyProperties(userInfo, newUser);
         newUser.setPassword(userInfo.getPassword());
         newUser.setUserId(userInfo.getEmailId().toLowerCase());
         log.info("RegisterNewUser-->" + newUser);
         userRepository.save(newUser);
-        return true;
+        responseDTO.setSignUpSuccess(true);
+        responseDTO.setUserId(userRepository.findByEmailId(userInfo.getEmailId()).getUserId());
+        return responseDTO;
     }
 
     @Override
@@ -46,6 +50,7 @@ public class UserServiceImplementation implements UserService {
         if (userData != null) {
             if (userData.getPassword().equals(requestContent.getPassword())) {
                 responseDTO.setUserId(userData.getUserId());
+                responseDTO.setUsername(userData.getFullName());
                 responseDTO.setLoginSuccess(true);
                 responseDTO.setErrMsg(null);
             } else {
