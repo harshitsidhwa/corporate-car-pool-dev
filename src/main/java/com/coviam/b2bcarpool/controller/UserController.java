@@ -41,6 +41,7 @@ public class UserController {
         } catch (Exception e) {
             responseDTO.setSuccess(false);
             responseDTO.setErrorMessage(e.getMessage());
+            e.printStackTrace();
         }
         return responseDTO;
     }
@@ -69,6 +70,7 @@ public class UserController {
             responseDTO.setErrorMessage(exp.getMessage());
             responseDTO.setSuccess(false);
             responseDTO.setResponseContent(null);
+            exp.printStackTrace();
         }
         return responseDTO;
     }
@@ -103,6 +105,7 @@ public class UserController {
             loginResponse.setErrorMessage(exp.getMessage());
             loginResponse.setSuccess(false);
             loginResponse.setResponseContent(null);
+            exp.printStackTrace();
         }
         return loginResponse;
     }

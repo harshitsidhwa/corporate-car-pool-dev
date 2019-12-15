@@ -40,6 +40,7 @@ public class FindRideController {
             response.setResponseContent(null);
             response.setSuccess(false);
             response.setErrorMessage(exp.getMessage());
+            exp.printStackTrace();
         }
         return response;
     }
@@ -68,6 +69,7 @@ public class FindRideController {
             response.setResponseContent(null);
             response.setSuccess(false);
             response.setErrorMessage(exp.getMessage());
+            exp.printStackTrace();
         }
         return response;
     }

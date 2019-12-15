@@ -36,7 +36,8 @@ public class VehicleController {
         } catch (Exception exp) {
             response.setResponseContent(null);
             response.setSuccess(false);
-            response.setErrorMessage(ErrorMessages.SOME_UNEXPECTED_ERROR_OCCUR);
+            response.setErrorMessage(exp.getMessage());
+            exp.printStackTrace();
         }
         return response;
     }
@@ -61,6 +62,7 @@ public class VehicleController {
             responseDTO.setSuccess(false);
             responseDTO.setResponseContent(null);
             responseDTO.setErrorMessage(exp.getMessage());
+            exp.printStackTrace();
         }
         return responseDTO;
     }

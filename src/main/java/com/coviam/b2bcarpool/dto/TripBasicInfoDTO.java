@@ -10,11 +10,12 @@ public class TripBasicInfoDTO {
     private String userId;
     private String tripId;
     private String profilePic;
-    private String name;
+    private String fullName;
     private String vehicleNumber;
     private Points pickupPoint;
     private Points destinationPoint;
     private Date tripStartTime;
     private int offeredSeats;
     private int numberOfJoinedRiders = 0;
+    private String phoneNumber;
 }

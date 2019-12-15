@@ -46,6 +46,7 @@ public class OfferRideController {
             responseDTO.setSuccess(false);
             responseDTO.setErrorMessage(exp.getMessage());
             responseDTO.setResponseContent(null);
+            exp.printStackTrace();
         }
         return responseDTO;
     }

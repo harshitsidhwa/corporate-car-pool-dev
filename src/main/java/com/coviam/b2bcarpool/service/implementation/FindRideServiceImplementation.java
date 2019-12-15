@@ -8,10 +8,12 @@ import com.coviam.b2bcarpool.helper.DateHelper;
 import com.coviam.b2bcarpool.helper.ErrorMessages;
 import com.coviam.b2bcarpool.models.Riders;
 import com.coviam.b2bcarpool.models.Trips;
+import com.coviam.b2bcarpool.models.User;
 import com.coviam.b2bcarpool.models.enums.RideStatusEnum;
 import com.coviam.b2bcarpool.models.enums.TripStatusEnum;
 import com.coviam.b2bcarpool.repository.RideRepository;
 import com.coviam.b2bcarpool.repository.TripsRepository;
+import com.coviam.b2bcarpool.repository.UserRepository;
 import com.coviam.b2bcarpool.service.FindRideService;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
@@ -39,6 +41,8 @@ public class FindRideServiceImplementation implements FindRideService {
     private RideRepository rideRepository;
     @Autowired
     private TripsRepository tripsRepository;
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private GoogleMapsConfig googleMapsConfig;
 
@@ -116,18 +120,25 @@ public class FindRideServiceImplementation implements FindRideService {
      */
     public List<TripBasicInfoDTO> getBestMatchingRide(RideDTO requestContent) throws ParseException {
         List<TripBasicInfoDTO> result = new ArrayList<>();
+
         int initialGap = 2;
         Date dateTimeBeforeStartTime = DateHelper.getDateTimeBeforeHours(requestContent.getRideStartTime(), initialGap);
         Date dateTimeAfterStartTime = DateHelper.getDateTimeAfterHours(requestContent.getRideStartTime(), initialGap);
         log.info("TimeRangeRequested-->\n StartTime-->" + dateTimeBeforeStartTime + "\nEndTime-->" + dateTimeAfterStartTime);
+
         List<Trips> tripsFromDb = tripsRepository.findByTripStartTimeBetween(dateTimeBeforeStartTime, dateTimeAfterStartTime);
         log.info("FindTripsFromDB-->" + tripsFromDb.toString());
+
         for (Trips trips : tripsFromDb) {
             if (trips.getTripStatus().equalsIgnoreCase(TripStatusEnum.ACTIVE_STATUS) &&
                     ((trips.getOfferedSeats() - trips.getCurrSeats()) >= requestContent.getRequestedSeats())) {
+                if (requestContent.getUserId().equalsIgnoreCase(trips.getUserId())) continue;
                 TripBasicInfoDTO singleTrip = new TripBasicInfoDTO();
                 BeanUtils.copyProperties(trips, singleTrip);
                 singleTrip.setNumberOfJoinedRiders(trips.getCurrSeats());
+                User userInfo = userRepository.findByEmailId(trips.getUserId());
+                singleTrip.setFullName(userInfo.getFullName());
+                singleTrip.setPhoneNumber(userInfo.getPhoneNumber());
                 result.add(singleTrip);
             }
         }
