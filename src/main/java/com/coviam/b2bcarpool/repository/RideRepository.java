@@ -17,4 +17,6 @@ public interface RideRepository extends MongoRepository<Riders, String> {
   List<Riders> findByRideStartTime();
 
   List<Riders> findByRideStartTimeBetween(Date startTime, Date endTime);
+
+  List<Riders> findByUserIdAndRideStatus(String riderUserId, String allottedStatus);
 }
