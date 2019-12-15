@@ -53,7 +53,7 @@ public class VehicleController {
                 responseDTO.setErrorMessage(null);
                 responseDTO.setResponseContent(null);
             } else {
-                responseDTO.setSuccess(true);
+                responseDTO.setSuccess(false);
                 responseDTO.setErrorMessage(ErrorMessages.SAME_VEHICLE_REGISTRATION_ATTEMPT);
                 responseDTO.setResponseContent(null);
             }
