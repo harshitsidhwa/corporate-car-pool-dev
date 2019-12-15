@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface FindRideService {
 
-    List<TripBasicInfoDTO> getBestMatchingRide(RideDTO requestContent) throws ParseException;
+    List<TripBasicInfoDTO> getBestMatchingRide(String userId, RideDTO requestContent) throws ParseException;
 
     JoinRideResponseDTO insertRideToTrip(String riderUserId, RideDTO requestContent) throws InterruptedException, ApiException, IOException;
 }

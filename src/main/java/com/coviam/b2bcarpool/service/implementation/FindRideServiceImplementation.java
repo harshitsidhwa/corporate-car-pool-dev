@@ -53,6 +53,7 @@ public class FindRideServiceImplementation implements FindRideService {
      * @param requestContent
      * @return
      */
+    @Override
     public JoinRideResponseDTO insertRideToTrip(String riderUserId, RideDTO requestContent) throws InterruptedException, ApiException, IOException {
         JoinRideResponseDTO responseDTO = new JoinRideResponseDTO();
         if (rideRepository.findByUserIdAndAllottedTripId(riderUserId, requestContent.getTripId()) != null) {
@@ -118,7 +119,8 @@ public class FindRideServiceImplementation implements FindRideService {
      * @param requestContent
      * @return
      */
-    public List<TripBasicInfoDTO> getBestMatchingRide(RideDTO requestContent) throws ParseException {
+    @Override
+    public List<TripBasicInfoDTO> getBestMatchingRide(String userId, RideDTO requestContent) throws ParseException {
         List<TripBasicInfoDTO> result = new ArrayList<>();
 
         int initialGap = 2;
@@ -132,7 +134,7 @@ public class FindRideServiceImplementation implements FindRideService {
         for (Trips trips : tripsFromDb) {
             if (trips.getTripStatus().equalsIgnoreCase(TripStatusEnum.ACTIVE_STATUS) &&
                     ((trips.getOfferedSeats() - trips.getCurrSeats()) >= requestContent.getRequestedSeats())) {
-                if (requestContent.getUserId().equalsIgnoreCase(trips.getUserId())) continue;
+                if (userId.equalsIgnoreCase(trips.getUserId())) continue;
                 TripBasicInfoDTO singleTrip = new TripBasicInfoDTO();
                 BeanUtils.copyProperties(trips, singleTrip);
                 singleTrip.setNumberOfJoinedRiders(trips.getCurrSeats());
