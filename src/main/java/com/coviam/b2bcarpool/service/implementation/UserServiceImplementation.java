@@ -26,12 +26,15 @@ public class UserServiceImplementation implements UserService {
         SignUpResponseDTO responseDTO = new SignUpResponseDTO();
         User newUser = new User();
         BeanUtils.copyProperties(userInfo, newUser);
+        newUser.setFullName(userInfo.getFullName());
         newUser.setPassword(userInfo.getPassword());
         newUser.setUserId(userInfo.getEmailId().toLowerCase());
         log.info("RegisterNewUser-->" + newUser);
         userRepository.save(newUser);
+        User user = userRepository.findByEmailId(userInfo.getEmailId());
         responseDTO.setSignUpSuccess(true);
-        responseDTO.setUserId(userRepository.findByEmailId(userInfo.getEmailId()).getUserId());
+        responseDTO.setUserId(user.getUserId());
+        responseDTO.setUsername(user.getFullName());
         return responseDTO;
     }
 
@@ -46,7 +49,8 @@ public class UserServiceImplementation implements UserService {
     @Override
     public LoginResponseDTO checkUserLogin(LoginRequestDTO requestContent) {
         LoginResponseDTO responseDTO = new LoginResponseDTO();
-        User userData = userRepository.findByEmailId(requestContent.getEmailId().toLowerCase());
+        User userData = userRepository.findByUserId(requestContent.getEmailId().toLowerCase());
+        log.info("LoginUserCheck --> " + userData);
         if (userData != null) {
             if (userData.getPassword().equals(requestContent.getPassword())) {
                 responseDTO.setUserId(userData.getUserId());
