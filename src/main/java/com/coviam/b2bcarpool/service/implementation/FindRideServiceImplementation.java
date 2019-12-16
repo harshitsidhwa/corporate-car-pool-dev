@@ -152,6 +152,7 @@ public class FindRideServiceImplementation implements FindRideService {
                 User userInfo = userRepository.findByEmailId(trips.getUserId());
                 singleTrip.setFullName(userInfo.getFullName());
                 singleTrip.setPhoneNumber(userInfo.getPhoneNumber());
+                singleTrip.setRequestedSeats(requestContent.getRequestedSeats());
                 result.add(singleTrip);
             }
         }

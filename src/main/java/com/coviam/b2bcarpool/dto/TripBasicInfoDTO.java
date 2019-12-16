@@ -17,4 +17,5 @@ public class TripBasicInfoDTO {
     private Date tripStartTime;
     private int availableSeats;
     private String phoneNumber;
+    private int requestedSeats;
 }

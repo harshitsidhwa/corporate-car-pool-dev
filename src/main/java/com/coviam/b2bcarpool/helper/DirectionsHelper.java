@@ -4,10 +4,7 @@ import com.coviam.b2bcarpool.config.GoogleMapsConfig;
 import com.coviam.b2bcarpool.models.Points;
 import com.google.maps.DirectionsApi;
 import com.google.maps.errors.ApiException;
-import com.google.maps.model.DirectionsResult;
-import com.google.maps.model.LatLng;
-import com.google.maps.model.TravelMode;
-import com.google.maps.model.Unit;
+import com.google.maps.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -46,6 +43,7 @@ public class DirectionsHelper {
     }
 
     public double getDistanceFromAPointFromPolyline(Points pickupPointA, Points destinationPointB, Points requestedPoint) {
+
         return 0.0;
     }
 }
