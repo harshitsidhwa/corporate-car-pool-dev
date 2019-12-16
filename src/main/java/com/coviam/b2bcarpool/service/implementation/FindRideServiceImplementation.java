@@ -154,7 +154,6 @@ public class FindRideServiceImplementation implements FindRideService {
                 singleTrip.setFullName(userInfo.getFullName());
                 singleTrip.setPhoneNumber(userInfo.getPhoneNumber());
                 singleTrip.setRequestedSeats(requestContent.getRequestedSeats());
-                singleTrip.setTripStartTime(DateHelper.formatDate(trips.getTripStartTime()));
                 result.add(singleTrip);
             }
         }

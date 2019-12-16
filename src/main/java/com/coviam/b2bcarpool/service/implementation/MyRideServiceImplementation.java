@@ -39,7 +39,6 @@ public class MyRideServiceImplementation implements MyRidesService {
         for (Riders ride : rides) {
             RideBasicInfoDTO singleRide = new RideBasicInfoDTO();
             BeanUtils.copyProperties(ride, singleRide);
-            singleRide.setRideStartTime(DateHelper.formatDate(ride.getRideStartTime()));
             singleRide.setTripId(ride.getAllottedTripId());
             singleRide.setTripStatus(ride.getRideStatus());
             Trips trip = tripsRepository.findByTripId(ride.getAllottedTripId());
@@ -74,7 +73,6 @@ public class MyRideServiceImplementation implements MyRidesService {
         for (Riders ride : rides) {
             RideBasicInfoDTO singleRide = new RideBasicInfoDTO();
             BeanUtils.copyProperties(ride, singleRide);
-            singleRide.setRideStartTime(DateHelper.formatDate(ride.getRideStartTime()));
             singleRide.setTripId(ride.getAllottedTripId());
             singleRide.setTripStatus(ride.getRideStatus());
             Trips trip = tripsRepository.findByTripId(ride.getAllottedTripId());
