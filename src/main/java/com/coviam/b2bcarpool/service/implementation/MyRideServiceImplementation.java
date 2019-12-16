@@ -2,6 +2,7 @@ package com.coviam.b2bcarpool.service.implementation;
 
 import com.coviam.b2bcarpool.dto.RideBasicInfoDTO;
 import com.coviam.b2bcarpool.models.Riders;
+import com.coviam.b2bcarpool.models.Trips;
 import com.coviam.b2bcarpool.models.enums.RideStatusEnum;
 import com.coviam.b2bcarpool.repository.RideRepository;
 import com.coviam.b2bcarpool.repository.TripsRepository;
@@ -39,7 +40,14 @@ public class MyRideServiceImplementation implements MyRidesService {
             BeanUtils.copyProperties(ride, singleRide);
             singleRide.setTripId(ride.getAllottedTripId());
             singleRide.setTripStatus(ride.getRideStatus());
-            singleRide.setVehicleNumber(tripsRepository.findByTripId(ride.getAllottedTripId()).getVehicleNumber());
+            Trips trip = tripsRepository.findByTripId(ride.getAllottedTripId());
+            if (trip == null) continue;
+            singleRide.setVehicleNumber(trip.getVehicleNumber());
+            if (ride.isRiderTripOwner()) {
+                singleRide.setSeats("Offered: " + trip.getOfferedSeats());
+            } else {
+                singleRide.setSeats("Requested: " + ride.getRequestedSeats());
+            }
             result.add(singleRide);
         }
 
@@ -66,7 +74,14 @@ public class MyRideServiceImplementation implements MyRidesService {
             BeanUtils.copyProperties(ride, singleRide);
             singleRide.setTripId(ride.getAllottedTripId());
             singleRide.setTripStatus(ride.getRideStatus());
-            singleRide.setVehicleNumber(tripsRepository.findByTripId(ride.getAllottedTripId()).getVehicleNumber());
+            Trips trip = tripsRepository.findByTripId(ride.getAllottedTripId());
+            if (trip == null) continue;
+            singleRide.setVehicleNumber(trip.getVehicleNumber());
+            if (ride.isRiderTripOwner()) {
+                singleRide.setSeats("Offered: " + trip.getOfferedSeats());
+            } else {
+                singleRide.setSeats("Requested: " + ride.getRequestedSeats());
+            }
             result.add(singleRide);
         }
 

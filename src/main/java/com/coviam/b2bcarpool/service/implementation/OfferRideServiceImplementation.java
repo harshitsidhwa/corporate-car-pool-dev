@@ -67,6 +67,7 @@ public class OfferRideServiceImplementation implements OfferRideService {
         newTrip.setTripStatus(TripStatusEnum.ACTIVE_STATUS);
         newTrip.setCreatedDate(new Date());
         newTrip.setCreatedBy(userId);
+        newTrip.setCurrSeats(0);
         log.info("CreateTripRequest-->" + newTrip.toString());
         tripsRepository.save(newTrip);
         Trips trip = tripsRepository.findByUserIdAndTripStartTime(userId, requestContent.getTripStartTime());
@@ -74,6 +75,7 @@ public class OfferRideServiceImplementation implements OfferRideService {
         Riders rider = new Riders();
         BeanUtils.copyProperties(trip, rider);
         rider.setAllottedTripId(trip.getTripId());
+        rider.setRequestedSeats(0);
         rider.setRideStatus(RideStatusEnum.ALLOTTED_STATUS);
         rider.setRideStartTime(trip.getTripStartTime());
         rider.setRiderTripOwner(true);

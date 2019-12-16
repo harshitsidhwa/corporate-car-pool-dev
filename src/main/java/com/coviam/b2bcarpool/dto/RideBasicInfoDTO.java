@@ -13,7 +13,7 @@ public class RideBasicInfoDTO {
     private Points pickupPoint;
     private Points destinationPoint;
     private Date rideStartTime;
-    private int requestedSeats;
+    private String seats;
     private String tripStatus;
     private String vehicleNumber;
 }

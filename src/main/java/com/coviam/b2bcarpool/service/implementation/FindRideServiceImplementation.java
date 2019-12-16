@@ -102,6 +102,7 @@ public class FindRideServiceImplementation implements FindRideService {
         rider.setUserId(riderUserId);
         rider.setAllottedTripId(requestContent.getTripId());
         rider.setRideStatus(RideStatusEnum.ALLOTTED_STATUS);
+        rider.setRequestedSeats(requestContent.getRequestedSeats());
         rider.setCreatedBy(riderUserId);
         rideRepository.save(rider);
         rider = rideRepository.findByUserIdAndAllottedTripId(riderUserId, requestContent.getTripId());
@@ -109,7 +110,7 @@ public class FindRideServiceImplementation implements FindRideService {
         // Increase CurrSeats count
         // if all seats are fulled then change status
         trip.getJoinedRidersId().add(new ObjectId(rider.getRideId()));
-        trip.setCurrSeats(trip.getCurrSeats() + rider.getRequestedSeats());
+        trip.setCurrSeats(trip.getCurrSeats() + requestContent.getRequestedSeats());
         if (trip.getCurrSeats() == trip.getOfferedSeats()) {
             trip.setTripStatus(TripStatusEnum.FILLED_STATUS);
         }
