@@ -60,6 +60,11 @@
             <artifactId>google-maps-services</artifactId>
             <version>0.10.1</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.google.maps.android</groupId>-->
+<!--            <artifactId>android-maps-utils</artifactId>-->
+<!--            <version>0.6.0</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

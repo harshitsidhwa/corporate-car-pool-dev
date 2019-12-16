@@ -70,4 +70,12 @@ public class DateHelper {
         c.setTimeZone(TimeZone.getTimeZone("UTC"));
         return sdf.parse(sdf.format(c.getTime()));
     }
+
+    public static String formatDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.setTimeZone(TimeZone.getTimeZone("IST"));
+        return sdf.format(c.getTime());
+    }
 }
