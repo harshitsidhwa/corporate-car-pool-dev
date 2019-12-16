@@ -148,7 +148,7 @@ public class FindRideServiceImplementation implements FindRideService {
                     continue; // filter based on pickup-point
                 TripBasicInfoDTO singleTrip = new TripBasicInfoDTO();
                 BeanUtils.copyProperties(trips, singleTrip);
-                singleTrip.setNumberOfJoinedRiders(trips.getCurrSeats());
+                singleTrip.setAvailableSeats(trips.getOfferedSeats() - trips.getCurrSeats());
                 User userInfo = userRepository.findByEmailId(trips.getUserId());
                 singleTrip.setFullName(userInfo.getFullName());
                 singleTrip.setPhoneNumber(userInfo.getPhoneNumber());

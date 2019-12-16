@@ -44,4 +44,8 @@ public class DirectionsHelper {
         }
         return false;
     }
+
+    public double getDistanceFromAPointFromPolyline(Points pickupPointA, Points destinationPointB, Points requestedPoint) {
+        return 0.0;
+    }
 }

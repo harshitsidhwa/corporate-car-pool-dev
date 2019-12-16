@@ -15,7 +15,6 @@ public class TripBasicInfoDTO {
     private Points pickupPoint;
     private Points destinationPoint;
     private Date tripStartTime;
-    private int offeredSeats;
-    private int numberOfJoinedRiders = 0;
+    private int availableSeats;
     private String phoneNumber;
 }
