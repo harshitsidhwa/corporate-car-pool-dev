@@ -1,7 +1,9 @@
 # corporate-car-pool-dev
-A Simple Car Pooling WebApp, specifically based for corporate employees. Offer Ride, Scheduler Your Ride. Uses Google Maps APIs to find the best route.Project part of CODICO-2019
 
 This project build upon Java Spring Boot using google maps api to calculate distance, geoencoding api to convert coordinates to Address and vise versa.
+Find the nearest point on the route from a location.
+Find Ride Algorithm is uploaded in this repo.
+This project only has APIs.
 
 ## Feature:
 * Login/Sign-Up
